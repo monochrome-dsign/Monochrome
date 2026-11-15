@@ -8,10 +8,10 @@ window.MONO_CONFIG = {
   social: {
     instagram: "https://www.instagram.com/monochrome_dsg/",
     tiktok: "https://www.tiktok.com/@monochrome.gd",
-    // Segundo icono de la cabecera (en el Figma aparece una "G" en círculo).
-    // Pon aquí la URL que corresponda (Gumroad, Behance, etc.).
-    secondary: "https://www.tiktok.com/@monochrome.gd",
-    secondaryLabel: "TikTok"
+    // Segundo icono de la cabecera.
+    secondary: "https://www.youtube.com/@Monochrome.creative",
+    secondaryLabel: "YouTube",
+    youtube: "https://www.youtube.com/@Monochrome.creative"
   },
 
   /* ------------------------------------------------------------------------
@@ -26,8 +26,8 @@ window.MONO_CONFIG = {
                       el resumen. Funciona ya, pero convierte peor.
      ------------------------------------------------------------------------ */
   form: {
-    provider: "mailto",
-    web3formsKey: "",            // p.ej. "a1b2c3d4-...."
+    provider: "web3forms",
+    web3formsKey: "fda27993-1b4d-47d1-b920-cc32db8e61c5",
     endpoint: "",                // Formspree: "https://formspree.io/f/xxxxxx" · custom: tu URL
     subject: "Nuevo lead desde la web · Monochrome"
   },
