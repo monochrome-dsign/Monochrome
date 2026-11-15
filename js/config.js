@@ -7,7 +7,6 @@ window.MONO_CONFIG = {
 
   social: {
     instagram: "https://www.instagram.com/monochrome_dsg/",
-    tiktok: "https://www.tiktok.com/@monochrome.gd",
     // Segundo icono de la cabecera.
     secondary: "https://www.youtube.com/@Monochrome.creative",
     secondaryLabel: "YouTube",
