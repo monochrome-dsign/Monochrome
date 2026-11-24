@@ -33,7 +33,7 @@ Cada `git push` a `main` publica la web en monochrome.website en uno o dos minut
 
 ## Feed de Instagram
 
-`/api/instagram` lee las últimas publicaciones de @monochrome_dsg con la API de Instagram y las guarda una hora en KV (`monochrome-instagram`). Necesita un token de acceso de larga duración guardado como secreto `IG_TOKEN` en Cloudflare (Workers → monochrome → Settings → Variables and Secrets). Un cron semanal renueva el token, así que no caduca. Si no hay token o Instagram falla, la portada muestra las cinco imágenes estáticas enlazadas al perfil.
+`/api/instagram` lee las últimas publicaciones de @monochrome_dsg desde el feed JSON de [Behold](https://behold.so) (cuenta con el Google de Monochrome; URL en `BEHOLD_URL`, `wrangler.jsonc`) y las guarda una hora en KV (`monochrome-instagram`), para no pasar de las 1.200 visitas al mes del plan gratuito. Como alternativa, el Worker también sabe leer la API de Instagram directamente con un token en el secreto `IG_TOKEN` (y lo renueva cada semana). Si no hay token o Instagram falla, la portada muestra las cinco imágenes estáticas enlazadas al perfil.
 
 ## Formulario
 

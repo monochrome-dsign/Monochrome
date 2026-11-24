@@ -12,6 +12,7 @@
   "kv_namespaces": [
     { "binding": "IG", "id": "b69ba703f4574e468898c7141fbd3117" }
   ],
+  "vars": { "BEHOLD_URL": "https://feeds.behold.so/Bn9GeRyXedU01eHTt2m9" },
   "triggers": { "crons": ["17 4 * * 1"] },
   "observability": { "enabled": true }
 }

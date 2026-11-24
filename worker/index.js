@@ -2,7 +2,9 @@
    Sirve la web estática (assets) y añade /api/instagram, que devuelve las
    últimas publicaciones de @monochrome_dsg desde la API de Instagram.
 
-   El token de Instagram se guarda como secreto IG_TOKEN (Cloudflare →
+   Fuente 1 (activa): feed JSON de Behold (variable BEHOLD_URL en wrangler.jsonc),
+   cacheado 1 h en KV para no gastar las visitas del plan gratuito.
+   Fuente 2 (alternativa): el token de Instagram se guarda como secreto IG_TOKEN (Cloudflare →
    Workers → monochrome → Settings → Variables and Secrets). El Worker lo
    renueva solo cada semana (cron) y guarda la versión renovada en KV, así
    que no caduca a los 60 días. */
@@ -33,21 +35,27 @@ async function instagram(env, ctx) {
   const cached = await env.IG.get("feed");
   if (cached) return new Response(cached, { headers });
 
-  const token = await getToken(env);
-  if (!token) return new Response('{"posts":[],"error":"no-token"}', { status: 503, headers });
-
-  const r = await fetch("https://graph.instagram.com/me/media?fields=" + FIELDS + "&limit=" + LIMIT + "&access_token=" + encodeURIComponent(token));
+  let r, behold = false;
+  if (env.BEHOLD_URL) {
+    behold = true;
+    r = await fetch(env.BEHOLD_URL);
+  } else {
+    const token = await getToken(env);
+    if (!token) return new Response('{"posts":[],"error":"no-token"}', { status: 503, headers });
+    r = await fetch("https://graph.instagram.com/me/media?fields=" + FIELDS + "&limit=" + LIMIT + "&access_token=" + encodeURIComponent(token));
+  }
   if (!r.ok) {
     const stale = await env.IG.get("feed-stale");
     return new Response(stale || '{"posts":[],"error":"instagram"}', { status: stale ? 200 : 502, headers });
   }
   const j = await r.json();
-  const posts = (j.data || []).map(p => ({
+  const raw = behold ? (Array.isArray(j) ? j : (j.posts || [])) : (j.data || []);
+  const posts = raw.slice(0, LIMIT).map(p => ({
     id: p.id,
-    caption: (p.caption || "").slice(0, 200),
-    media_type: p.media_type,
-    media_url: p.media_url,
-    thumbnail_url: p.thumbnail_url,
+    caption: (p.prunedCaption || p.caption || "").slice(0, 200),
+    media_type: p.mediaType || p.media_type,
+    media_url: (p.sizes && p.sizes.medium && p.sizes.medium.mediaUrl) || p.mediaUrl || p.media_url,
+    thumbnail_url: (p.sizes && p.sizes.medium && p.sizes.medium.mediaUrl) || p.thumbnailUrl || p.thumbnail_url,
     permalink: p.permalink,
     timestamp: p.timestamp
   }));
