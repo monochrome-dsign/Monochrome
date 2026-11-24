@@ -71,6 +71,10 @@ async function instagram(env, ctx) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.hostname === "www.monochrome.website") {
+      url.hostname = "monochrome.website";
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === "/api/instagram") return instagram(env, ctx);
     return env.ASSETS.fetch(request);
   },
