@@ -1,0 +1,110 @@
+/* Rosse · «Cantar para ensanchar el alma» — detalle, elegancia, amabilidad y frescura */
+:root{
+  --violeta:#565FFF; --oscuro:#303131; --claro:#EAEAEA; --menta:#9FFFCE; --blanco:#FFFFFF; --lavanda:#EEF0FF;
+  --font-display:"Outfit",system-ui,sans-serif; --font-text:"Outfit",system-ui,sans-serif; --font-meta:"Outfit",system-ui,sans-serif; --font-accent:"Instrument Serif",Georgia,serif;
+  --bar-ink:var(--blanco); --bar-pill:var(--menta); --bar-pill-ink:var(--oscuro);
+  --soft:cubic-bezier(.25,.8,.25,1);
+}
+html[data-bar="dark"]{--bar-ink:var(--oscuro)}
+body.ro{background:var(--blanco);color:var(--oscuro);font:400 1.08rem/1.6 var(--font-text)}
+.ro p{max-width:62ch}
+section{position:relative}
+.ro-story,.ro-mark,.ro-color,.ro-type,.ro-res,.ro-web{padding-block:var(--space-section)}
+
+.ro-kicker{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.1rem;font:600 .78rem/1 var(--font-meta);letter-spacing:.14em;text-transform:uppercase;color:var(--violeta)}
+.ro-kicker::before{content:"♪";font-size:1rem;letter-spacing:0}
+.ro-kicker--light{color:var(--menta)}
+.ro-fine{font:400 .85rem/1.5 var(--font-meta);opacity:.75;margin-top:1rem}
+.ro-fine a{color:inherit}
+.ro-h2{font:600 clamp(2.1rem,4.6vw,4.2rem)/1.04 var(--font-display);letter-spacing:-.02em;max-width:19ch;text-wrap:balance;margin-bottom:clamp(1.25rem,3vw,2rem)}
+.ro-h2 em{font:italic 400 1.08em/1 var(--font-accent);letter-spacing:0;color:var(--violeta)}
+.ro-lead{font-size:clamp(1.1rem,1.4vw,1.28rem);font-weight:300}
+
+.ro-logo{display:block;aspect-ratio:362/225;background:currentColor;-webkit-mask:url(../img/logo.png) no-repeat center/contain;mask:url(../img/logo.png) no-repeat center/contain}
+
+/* 01 · Portada */
+.ro-hero{min-height:100svh;display:grid;grid-template-rows:1fr auto auto auto;justify-items:center;gap:clamp(1rem,3vw,1.75rem);padding:6rem var(--m) clamp(1.5rem,3vw,2.5rem);background:var(--violeta);color:var(--blanco);overflow:hidden}
+.ro-hero::before{content:"";position:absolute;inset:auto -10% -40% -10%;height:70%;background:radial-gradient(50% 60% at 50% 50%,rgba(159,255,206,.28),transparent 70%);pointer-events:none}
+.ro-hero__title{align-self:end;width:min(70vw,560px);margin:0}
+.ro-logo--hero{color:var(--blanco)}
+/* Motion firma: la línea de voz se traza (como el subrayado de la web) */
+.ro-wave{width:min(60vw,420px);color:var(--menta)}
+.ro-wave path{stroke-dasharray:720;stroke-dashoffset:0}
+.can-play .ro-wave path{stroke-dashoffset:720}
+.can-play .ro-wave.is-play path{animation:ro-draw 1.6s var(--soft) .2s forwards}
+@keyframes ro-draw{to{stroke-dashoffset:0}}
+.ro-hero__lead{font:italic 400 clamp(1.8rem,3.6vw,3rem)/1.1 var(--font-accent);text-align:center}
+.ro-hero__meta{justify-self:stretch;display:flex;justify-content:space-between;gap:1rem;font:500 .78rem/1.3 var(--font-meta);letter-spacing:.12em;text-transform:uppercase;max-width:none!important;opacity:.9}
+
+/* 02 · Rosa */
+.ro-story{background:var(--lavanda)}
+.ro-story__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:end}
+@media (min-width:960px){.ro-story__grid{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}}
+.ro-traits{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
+.ro-traits li{padding:.6rem 1.1rem;border-radius:999px;background:var(--blanco);border:1.5px solid var(--violeta);font-weight:500;color:var(--violeta)}
+.ro-traits li:nth-child(2n){background:var(--menta);border-color:var(--menta);color:var(--oscuro)}
+
+/* Tarjetas de brandbook */
+.ro-card{background:var(--blanco);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(48,49,49,.06),0 30px 60px -36px rgba(86,95,255,.45)}
+.ro-card img{width:100%}
+.ro-card figcaption{font:500 .8rem/1 var(--font-meta);letter-spacing:.1em;text-transform:uppercase;padding:1rem 1.25rem 1.25rem;color:var(--violeta)}
+.ro-sheets,.ro-res__grid{display:grid;gap:clamp(1rem,2vw,1.75rem);margin-block:clamp(2rem,5vw,3.5rem) clamp(1rem,2vw,1.75rem)}
+@media (min-width:900px){.ro-sheets,.ro-res__grid{grid-template-columns:1fr 1fr}}
+.ro-card--wide{display:grid;justify-items:center}
+.ro-card--wide img{max-width:980px}
+.ro-card--wide figcaption{justify-self:stretch}
+
+/* 04 · Color */
+.ro-color{background:var(--oscuro);color:var(--blanco)}
+.ro-color .ro-h2 em{color:var(--menta)}
+.ro-bands{display:flex;gap:.6rem;margin-top:clamp(2rem,5vw,3rem)}
+.ro-bands li{flex:var(--w) 1 0;min-width:130px}
+.ro-bands button{width:100%;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:.25rem;padding:1.1rem;border:0;border-radius:18px;background:var(--c);color:var(--blanco);text-align:left;font:400 .85rem/1.2 var(--font-meta);transition:transform .3s var(--soft)}
+.ro-bands li:nth-child(2) button{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.25)}
+.ro-bands li:nth-child(3) button,.ro-bands li:nth-child(4) button{color:var(--oscuro)}
+.ro-bands b{font:600 1.35rem/1 var(--font-display)}
+.ro-bands small{opacity:.8;font-size:.72rem}
+.ro-bands button:hover{transform:translateY(-6px)}
+.ro-bands button:active{transform:scale(.97)}
+@media (max-width:760px){.ro-bands{flex-direction:column}.ro-bands button{min-height:120px}}
+
+/* 05 · Tipografía */
+.ro-type__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (min-width:960px){.ro-type__grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+.ro-spec{position:relative;padding:clamp(1.5rem,4vw,3rem);border-radius:28px;background:var(--violeta);color:var(--blanco);overflow:hidden}
+.ro-spec__aa{position:absolute;right:-.06em;top:-.22em;font:700 clamp(8rem,20vw,16rem)/1 var(--font-display);opacity:.16;max-width:none!important}
+.ro-spec__h{position:relative;font:600 clamp(1.8rem,3.4vw,2.8rem)/1.08 var(--font-display);letter-spacing:-.02em;margin-bottom:1.5rem;max-width:16ch!important}
+.ro-spec__w{position:relative;display:flex;flex-wrap:wrap;gap:1rem;font-size:1.15rem;margin-bottom:1.25rem}
+.ro-spec__abc{position:relative;font-size:.95rem;line-height:1.6;opacity:.85;word-break:break-all}
+
+/* 06 · Recursos */
+.ro-res{background:var(--menta)}
+.ro-res .ro-kicker{color:var(--oscuro)}
+.ro-res .ro-h2 em{color:var(--oscuro)}
+
+/* 07 · Web */
+.ro-web{background:var(--violeta);color:var(--blanco);overflow:hidden}
+.ro-web__head{margin-bottom:clamp(2rem,5vw,3.5rem)}
+.ro-web .ro-h2 em{color:var(--menta)}
+.ro-web__grid{display:grid;gap:clamp(1.5rem,3vw,2.5rem);align-items:center}
+@media (min-width:960px){.ro-web__grid{grid-template-columns:minmax(0,8fr) minmax(0,3fr)}}
+.ro-browser{border-radius:16px;overflow:hidden;background:var(--blanco);box-shadow:0 40px 80px -40px rgba(0,0,0,.55)}
+.ro-browser__bar{display:flex;align-items:center;gap:.4rem;padding:.7rem 1rem;background:#F3F4FF;color:var(--oscuro);font:500 .78rem/1 var(--font-meta)}
+.ro-browser__bar i{width:10px;height:10px;border-radius:50%;background:#C9CCF7}
+.ro-browser__bar span{margin-left:.75rem;opacity:.75}
+.ro-browser__scroll{height:min(70vh,620px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.ro-browser__scroll img{width:100%}
+.ro-phone{max-width:280px;justify-self:center;border:10px solid var(--oscuro);border-radius:36px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);aspect-ratio:9/19}
+.ro-phone img{width:100%}
+.ro-web .ro-fine{color:var(--blanco)}
+
+/* Cierre */
+.ro-end{min-height:85svh;display:grid;place-items:center;align-content:center;gap:1.25rem;padding:var(--space-section) var(--m) 3rem;text-align:center;background:var(--blanco)}
+.ro-logo--end{width:min(56vw,360px);color:var(--oscuro)}
+.ro-wave--end{color:var(--violeta)}
+.ro-end__line{font:italic 400 clamp(1.6rem,3vw,2.6rem)/1.1 var(--font-accent);color:var(--violeta)}
+.ro-end__foot{margin-top:clamp(3rem,7vw,6rem);text-align:left;border-top:1.5px solid var(--claro);padding-top:2rem}
+
+@media (prefers-reduced-motion:reduce){
+  .can-play .ro-wave path{stroke-dashoffset:0}
+}

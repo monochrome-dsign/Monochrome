@@ -1,0 +1,219 @@
+/* La Caverna del Gamer · «Partida guardada» — nostalgia noventera, 8 bits y tele de tubo */
+:root{
+  --pantalla:#111111; --verde:#1AE083; --ambar:#FFBD00; --morado:#542FBC; --indigo:#2D0F80; --crema:#F2EEDF; --rosa:#FF5C8A; --azul:#2F8CFF;
+  --font-display:"Silkscreen",ui-monospace,monospace; --font-text:"Rubik",system-ui,sans-serif; --font-meta:"Silkscreen",ui-monospace,monospace;
+  --bar-ink:var(--crema); --bar-pill:var(--verde); --bar-pill-ink:var(--pantalla);
+  --rainbow:linear-gradient(90deg,#FF5C8A 0 16.6%,#FFBD00 0 33.3%,#1AE083 0 50%,#2FD3FF 0 66.6%,#542FBC 0 83.3%,#B13BFF 0);
+  --step:steps(6,end);
+}
+html[data-bar="dark"]{--bar-ink:var(--pantalla)}
+body.lc{background:var(--pantalla);color:var(--crema);font:400 1.06rem/1.6 var(--font-text)}
+.lc p{max-width:62ch}
+section{position:relative}
+.lc-motiv,.lc-memory,.lc-console,.lc-inv,.lc-system,.lc-live,.lc-videos,.lc-channel{padding-block:var(--space-section)}
+
+/* Tele de tubo: líneas de barrido y viñeta (recurso firma) */
+.crt{background:var(--pantalla);color:var(--crema);overflow:hidden}
+.crt::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),radial-gradient(120% 90% at 50% 50%,transparent 60%,rgba(0,0,0,.55));mix-blend-mode:screen}
+.crt>*{position:relative;z-index:1}
+.lc-motiv,.lc-console,.lc-system,.lc-videos{background:var(--crema);color:var(--pantalla)}
+/* Franjas arcoíris a los lados, como en las cortinillas */
+.lc-hero::before,.lc-end::before{content:"";position:absolute;inset:0;z-index:0;background:var(--rainbow) left/12px 100% no-repeat,var(--rainbow) right/12px 100% no-repeat;background-image:linear-gradient(180deg,#FF5C8A 0 16.6%,#FFBD00 0 33.3%,#1AE083 0 50%,#2FD3FF 0 66.6%,#542FBC 0 83.3%,#B13BFF 0),linear-gradient(180deg,#FF5C8A 0 16.6%,#FFBD00 0 33.3%,#1AE083 0 50%,#2FD3FF 0 66.6%,#542FBC 0 83.3%,#B13BFF 0);background-size:10px 100%,10px 100%;background-position:left,right;background-repeat:no-repeat}
+
+.lc-kicker,.lc-fine{font:400 .78rem/1.4 var(--font-meta);letter-spacing:.06em;text-transform:uppercase}
+.lc-kicker{margin-bottom:1.1rem;color:var(--verde)}
+.lc-motiv .lc-kicker,.lc-console .lc-kicker,.lc-system .lc-kicker,.lc-videos .lc-kicker{color:var(--morado)}
+.lc-kicker::before{content:"▶ "}
+.lc-fine{opacity:.75;margin-top:1rem}
+.lc-h2{font:700 clamp(2rem,4.6vw,4.2rem)/1.02 var(--font-display);letter-spacing:-.01em;max-width:18ch;text-wrap:balance;margin-bottom:clamp(1.25rem,3vw,2rem)}
+.lc-h3{font:700 clamp(1.4rem,2.4vw,2rem)/1.1 var(--font-display);margin-bottom:1rem}
+.lc-lead{font-size:clamp(1.1rem,1.4vw,1.28rem)}
+
+/* Logotipo: archivo original como máscara */
+.lc-logo{display:block;background:currentColor;-webkit-mask:no-repeat center/contain;mask:no-repeat center/contain}
+.lc-logo--h{aspect-ratio:908/298;-webkit-mask-image:url(../img/logo-h.png);mask-image:url(../img/logo-h.png)}
+.lc-logo--v{aspect-ratio:461/453;-webkit-mask-image:url(../img/logo-v.png);mask-image:url(../img/logo-v.png)}
+
+/* 01 · Press Start */
+.lc-hero{min-height:100svh;display:grid;grid-template-rows:1fr auto auto;gap:clamp(1rem,3vw,2rem);padding:6rem calc(var(--m) + 10px) clamp(1.5rem,3vw,2.5rem)}
+.lc-hero__screen{align-self:center;display:grid;justify-items:center;gap:clamp(2rem,5vw,3.5rem)}
+.lc-hero__title{width:min(78vw,860px);margin:0}
+.lc-logo--h{color:var(--crema)}
+/* Motion firma: el logo carga a saltos, como un sprite */
+.can-play .lc-hero .lc-logo--h{clip-path:inset(0 100% 0 0)}
+.can-play .lc-hero .lc-logo--h.is-play{animation:lc-load .9s var(--step) .2s forwards}
+@keyframes lc-load{to{clip-path:inset(0 0 0 0)}}
+.lc-press{font:400 clamp(1rem,2vw,1.5rem)/1 var(--font-display);color:var(--ambar);letter-spacing:.1em;animation:lc-blink 1.1s steps(1,end) infinite}
+@keyframes lc-blink{50%{opacity:0}}
+.lc-hero__lead{font-size:clamp(1.15rem,1.8vw,1.5rem);text-align:center;justify-self:center;max-width:40ch!important}
+.lc-hero__meta{display:flex;justify-content:space-between;gap:1rem;font:400 .74rem/1.3 var(--font-meta);text-transform:uppercase;color:var(--verde);max-width:none!important}
+
+/* 02 · Leitmotiv */
+.lc-motiv__grid{display:grid;gap:clamp(2rem,5vw,5rem);align-items:center}
+@media (min-width:960px){.lc-motiv__grid{grid-template-columns:minmax(0,4fr) minmax(0,6fr)}}
+.lc-story{margin:0;padding:clamp(1.5rem,4vw,3rem);background:#FFFDF4;border:3px solid var(--pantalla);box-shadow:8px 8px 0 var(--morado)}
+.lc-story p{font:italic 400 clamp(1.15rem,1.6vw,1.4rem)/1.55 var(--font-text)}
+.lc-story footer{margin-top:1.25rem;font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;opacity:.7}
+.lc-brief{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:clamp(2.5rem,6vw,4rem)}
+.lc-brief li{padding:.7rem 1rem;border:2px solid var(--pantalla);background:var(--ambar);font:400 .82rem/1 var(--font-meta);text-transform:uppercase;box-shadow:4px 4px 0 var(--pantalla)}
+.lc-brief li:nth-child(2n){background:var(--verde)}
+.lc-brief li:nth-child(3n){background:#FFFDF4}
+
+/* 03 · Jugador */
+.lc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1rem;margin-block:clamp(2rem,5vw,3.5rem)}
+.lc-card{padding:1.25rem;border:2px solid var(--verde);background:rgba(26,224,131,.06)}
+.lc-card dt{font:400 .72rem/1 var(--font-meta);text-transform:uppercase;color:var(--verde);margin-bottom:.6rem}
+.lc-card dd{font:700 1.35rem/1.15 var(--font-display)}
+.lc-player__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:start}
+@media (min-width:960px){.lc-player__grid{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}}
+.lc-numbers{display:grid;gap:1.25rem}
+.lc-numbers dd{font:700 clamp(2rem,4vw,3.2rem)/1 var(--font-display);color:var(--ambar);font-variant-numeric:tabular-nums}
+.lc-numbers dt{font-size:.95rem;opacity:.8}
+
+/* 04 · Memory Card */
+.lc-sketch{display:grid;gap:clamp(1rem,2vw,1.75rem);margin-block:clamp(2rem,5vw,4rem)}
+@media (min-width:900px){.lc-sketch{grid-template-columns:5fr 6fr;align-items:center}}
+.lc-sketch img{width:100%;border:3px solid var(--pantalla)}
+.lc-sketch figcaption{font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;margin-top:.6rem;opacity:.75}
+.lc-versions{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));margin-bottom:clamp(1.5rem,3vw,2.5rem)}
+.lc-slide img{width:100%;border:3px solid var(--pantalla);box-shadow:6px 6px 0 var(--pantalla);transition:transform .25s var(--step)}
+@media (hover:hover) and (pointer:fine){.lc-slide:hover img{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--pantalla)}}
+.lc-colors img{width:100%;max-width:900px;border:3px solid var(--pantalla)}
+
+/* 05 · Sistema */
+.lc-pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:.75rem;margin-block:clamp(2rem,5vw,3rem)}
+.lc-pal button{width:100%;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:.3rem;padding:1rem;border:2px solid var(--pantalla);box-shadow:4px 4px 0 var(--pantalla);background:var(--c);color:var(--crema);text-align:left;font:400 .72rem/1.2 var(--font-meta);transition:transform .2s var(--step)}
+.lc-pal li:nth-child(2) button,.lc-pal li:nth-child(3) button{color:var(--pantalla)}
+.lc-pal b{font:700 1rem/1.1 var(--font-display)}
+.lc-pal small{font-family:var(--font-text);font-size:.72rem;opacity:.8}
+.lc-pal button:hover{transform:translateY(-4px)}
+.lc-pal button:active{transform:scale(.97)}
+.lc-sys{display:grid;gap:clamp(1rem,2vw,1.75rem);align-items:center}
+@media (min-width:900px){.lc-sys{grid-template-columns:6fr 4fr}}
+.lc-icons img,.lc-iso3d img{width:100%;border:2px solid rgba(242,238,223,.25)}
+.lc-sys figcaption{font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;margin-top:.6rem;color:var(--verde)}
+
+/* 06 · Directo */
+.lc-live{background:var(--indigo);background-image:linear-gradient(rgba(84,47,188,.7) 2px,transparent 2px),linear-gradient(90deg,rgba(84,47,188,.7) 2px,transparent 2px);background-size:56px 56px;color:var(--crema)}
+.lc-live .lc-kicker{color:var(--ambar)}
+.lc-tv{margin-block:clamp(2rem,5vw,3.5rem)}
+.lc-tv img{width:100%;border:4px solid var(--pantalla);border-radius:18px;box-shadow:0 0 0 10px #2a2a2a,0 40px 80px -30px #000}
+.lc-live__row{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.lc-live__row img{width:100%;border:3px solid var(--pantalla)}
+.lc-live__row figcaption{font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;margin-top:.6rem}
+
+/* 07 · Vídeos */
+.lc-thumbs{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));margin-block:clamp(2rem,5vw,3.5rem)}
+.lc-thumbs img{width:100%;border:3px solid var(--pantalla);box-shadow:6px 6px 0 var(--morado)}
+.lc-inventory{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:center}
+@media (min-width:900px){.lc-inventory{grid-template-columns:6fr 4fr}}
+.lc-inventory img{width:100%;border:3px solid var(--pantalla)}
+
+/* 08 · Canal */
+.lc-channel__grid{display:grid;gap:clamp(1.5rem,3vw,2.5rem);align-items:center}
+@media (min-width:900px){.lc-channel__grid{grid-template-columns:minmax(0,8fr) minmax(0,3fr)}}
+.lc-browser__bar{display:flex;align-items:center;gap:.4rem;padding:.6rem .9rem;background:#232323;border:2px solid #333;border-bottom:0;font:400 .7rem/1 var(--font-meta)}
+.lc-browser__bar i{width:10px;height:10px;background:var(--verde)}
+.lc-browser__bar i:nth-child(2){background:var(--ambar)}.lc-browser__bar i:nth-child(3){background:var(--rosa)}
+.lc-browser__bar span{margin-left:.75rem;opacity:.7;text-transform:lowercase}
+.lc-browser img{width:100%;border:2px solid #333}
+.lc-phone{max-width:300px;justify-self:center;border:10px solid #1e1e1e;border-radius:34px;overflow:hidden;box-shadow:0 30px 60px -20px #000}
+
+/* Cierre */
+.lc-end{min-height:90svh;display:grid;place-items:center;align-content:center;gap:1.75rem;padding:var(--space-section) calc(var(--m) + 10px) 3rem;text-align:center}
+.lc-end__logo{width:min(46vw,320px);color:var(--crema)}
+.lc-end__line{font:700 clamp(1.2rem,2.6vw,2rem)/1 var(--font-display);color:var(--verde)}
+.lc-end__foot{margin-top:clamp(3rem,7vw,6rem);text-align:left;border-top:2px dashed rgba(242,238,223,.25);padding-top:2rem}
+
+@media (prefers-reduced-motion:reduce){
+  .can-play .lc-hero .lc-logo--h{clip-path:none}
+  .lc-press{animation:none}
+}
+.lc-colors--full{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);align-items:end}
+.lc-colors--full img{max-width:none}
+.lc-colors--full figcaption{display:grid;gap:1rem;max-width:34ch}
+.lc-colors__t{font-family:var(--font-display),monospace;font-size:clamp(1.2rem,2.2vw,1.8rem);line-height:1.2;text-transform:uppercase}
+@media (max-width:700px){.lc-colors--full{grid-template-columns:1fr}}
+
+/* Hero: la habitación del 99 de fondo */
+.lc-hero{isolation:isolate}
+.lc-hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0!important;opacity:.38;filter:saturate(1.1)}
+.lc-hero::before{z-index:1}
+.lc-hero__screen,.lc-hero__lead,.lc-hero__meta{z-index:2}
+.lc-numbers--row{display:flex;flex-wrap:wrap;gap:clamp(1.5rem,5vw,4rem);margin-top:clamp(2.5rem,6vw,4rem)}
+.lc-motiv .lc-numbers dd{color:var(--morado)}
+
+/* 03 · Logotipo */
+.lc-memory__intro{display:grid;gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (min-width:960px){.lc-memory__intro{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+.lc-intro{border:3px solid #2a2a2a;background:#1f1f1f}
+.lc-intro video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.lc-intro figcaption,.lc-logos figcaption,.lc-sketch figcaption{font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;margin-top:.6rem;color:var(--verde);padding:0 .2rem .5rem}
+.lc-logos{margin-block:clamp(2.5rem,6vw,4rem)}
+.lc-logos img{width:100%;background:#E6E6E6;padding:clamp(1rem,3vw,2.5rem);border:3px solid #2a2a2a}
+.lc-memory .lc-sketch img{border-color:#2a2a2a}
+
+/* 04 · Consola */
+.lc-console{background-image:radial-gradient(rgba(17,17,17,.08) 1px,transparent 1px);background-size:6px 6px}
+.lc-hero3d{position:relative;margin-block:clamp(2rem,5vw,3.5rem);display:grid;justify-items:center;padding:clamp(1.5rem,4vw,3rem);background:var(--pantalla);border:3px solid var(--pantalla);box-shadow:10px 10px 0 var(--morado)}
+.lc-hero3d img{width:min(100%,980px);image-rendering:pixelated;filter:drop-shadow(0 30px 30px rgba(0,0,0,.6))}
+.can-play .lc-hero3d img{transform:translateY(24px) scale(.96);transition:transform .9s var(--step)}
+.can-play .lc-hero3d.is-visible img,.can-play .lc-hero3d.is-in img{transform:none}
+.lc-hero3d figcaption{position:absolute;left:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,1.75rem);display:grid;gap:.25rem;color:var(--crema);font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase}
+.lc-hero3d figcaption b{font:700 1.1rem/1 var(--font-display);color:var(--verde)}
+.lc-tex{display:grid;gap:1rem;align-items:start}
+@media (min-width:900px){.lc-tex{grid-template-columns:4fr 6fr}}
+.lc-tex__col{display:grid;gap:1rem}
+.lc-tex img,.lc-family img{width:100%;image-rendering:pixelated}
+.lc-tex figure,.lc-family figure{background:var(--pantalla);border:3px solid var(--pantalla);padding:.5rem}
+.lc-tex figcaption,.lc-family figcaption{font:400 .7rem/1.2 var(--font-meta);text-transform:uppercase;color:var(--verde);padding:.6rem .3rem .2rem}
+.lc-family{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));margin-top:1rem}
+.lc-family figure{display:grid;align-content:space-between;padding:1rem}
+.lc-family img{max-height:300px;object-fit:contain}
+
+/* 05 · Inventario */
+.lc-turn{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:.75rem;margin-block:clamp(2rem,5vw,3rem)}
+.lc-turn li{display:grid;grid-template-rows:1fr auto;justify-items:center;align-items:center;aspect-ratio:1;padding:1rem;background:#ECECEC;border:3px solid #2a2a2a;box-shadow:inset 0 0 0 3px #fff}
+.lc-turn img{max-width:88%;max-height:150px;width:auto;height:auto;image-rendering:pixelated}
+.lc-turn span{font:400 .7rem/1 var(--font-meta);text-transform:uppercase;color:var(--pantalla)}
+.lc-turn li:nth-child(4n+1){background:#FFE7A3}.lc-turn li:nth-child(4n+2){background:#C9F7DF}.lc-turn li:nth-child(4n+3){background:#D9CCFF}.lc-turn li:nth-child(4n+4){background:#FFD0DC}
+.lc-sheet img{width:100%;border:3px solid #2a2a2a}
+.lc-sheet figcaption{font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;margin-top:.6rem;color:var(--verde)}
+
+/* 06 · Sistema */
+.lc-icons,.lc-panels{margin-top:1rem}
+.lc-icons img{width:100%;background:#fff;padding:clamp(1rem,3vw,2rem);border:3px solid var(--pantalla)}
+.lc-panels img{width:100%;background:#E0E0E0;border:3px solid var(--pantalla)}
+.lc-icons figcaption,.lc-panels figcaption{font:400 .72rem/1.3 var(--font-meta);text-transform:uppercase;margin-top:.6rem;color:var(--morado)}
+
+/* 07 · Directo */
+.lc-ui{margin-top:clamp(2.5rem,6vw,4.5rem)}
+.lc-ui__head{display:grid;gap:.5rem;margin-bottom:1.25rem;max-width:62ch}
+.lc-ui__head p{opacity:.9}
+.lc-ui__pair{display:grid;gap:1rem}
+@media (min-width:900px){.lc-ui__pair{grid-template-columns:1fr 1fr}}
+.lc-screen{background:#141414;padding:clamp(.5rem,1.2vw,.9rem);border-radius:14px;box-shadow:0 0 0 3px #2a2a2a,0 30px 60px -30px #000}
+.lc-screen img{width:100%;border-radius:6px}
+.lc-screen figcaption{font:400 .7rem/1 var(--font-meta);text-transform:uppercase;color:var(--ambar);padding:.7rem .2rem .2rem}
+.lc-ui--duo{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:center}
+@media (min-width:900px){.lc-ui--duo{grid-template-columns:7fr 4fr}}
+
+/* 08 · Carátulas */
+.lc-videos__intro{display:grid;gap:1rem clamp(2rem,5vw,4rem);align-items:end}
+@media (min-width:960px){.lc-videos__intro{grid-template-columns:1fr 1fr}}
+.lc-shelf{overflow-x:auto;scroll-snap-type:x mandatory;padding:clamp(2rem,5vw,3rem) var(--m);-webkit-overflow-scrolling:touch}
+.lc-shelf__track{display:flex;gap:clamp(.75rem,2vw,1.25rem);width:max-content}
+.lc-shelf li{scroll-snap-align:center;width:min(78vw,520px);transform:rotate(-1deg);transition:transform .3s var(--step)}
+.lc-shelf li:nth-child(2n){transform:rotate(1deg)}
+.lc-shelf img{width:100%;box-shadow:0 2px 0 #000,0 24px 40px -18px rgba(0,0,0,.6)}
+@media (hover:hover) and (pointer:fine){.lc-shelf li:hover{transform:translateY(-8px) rotate(0)}}
+.lc-legend{display:flex;flex-wrap:wrap;gap:.6rem}
+.lc-legend li{display:flex;align-items:center;gap:.5rem;padding:.5rem .8rem;border:2px solid var(--pantalla);font:400 .74rem/1 var(--font-meta);text-transform:uppercase;background:#fff}
+.lc-legend li::before{content:"";width:14px;height:14px;background:var(--c)}
+
+/* 09 · Canal */
+.lc-banner{margin-block:clamp(2rem,5vw,3rem) 1rem}
+.lc-banner img,.lc-social img{width:100%;border:3px solid #2a2a2a}
+.lc-banner figcaption,.lc-social figcaption{font:400 .7rem/1 var(--font-meta);text-transform:uppercase;color:var(--verde);margin-top:.6rem}
+.lc-social{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr) minmax(0,3fr);align-items:start;margin-bottom:clamp(2rem,5vw,3.5rem)}
+@media (prefers-reduced-motion:reduce){.lc-hero__bg{display:none}.can-play .lc-hero3d img{transform:none}}

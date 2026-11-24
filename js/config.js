@@ -33,11 +33,10 @@ window.MONO_CONFIG = {
 
   /* ------------------------------------------------------------------------
      Feed de Instagram
-     Instagram ya no permite leer el feed sin token desde una web estática.
-     La opción más sencilla y gratuita: https://behold.so → conecta tu cuenta
-     → "JSON feed" → pega aquí la URL. Si lo dejas vacío se muestran las
-     imágenes estáticas del diseño enlazadas a tu perfil.
+     "/api/instagram" lo sirve el Worker de Cloudflare (worker/index.js) con
+     el token guardado como secreto IG_TOKEN. Si falla o no hay token, se
+     quedan las imágenes estáticas del diseño enlazadas a tu perfil.
      ------------------------------------------------------------------------ */
-  instagramFeedUrl: "",
+  instagramFeedUrl: "/api/instagram",
   instagramPosts: 8
 };

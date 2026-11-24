@@ -1,0 +1,17 @@
+{
+  "name": "monochrome",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "kv_namespaces": [
+    { "binding": "IG", "id": "b69ba703f4574e468898c7141fbd3117" }
+  ],
+  "triggers": { "crons": ["17 4 * * 1"] },
+  "observability": { "enabled": true }
+}

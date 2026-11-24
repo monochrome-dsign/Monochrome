@@ -1,0 +1,95 @@
+/* LYV · «Una bandera, muchas partidas» — banderín, cartón de juego de mesa y madera */
+:root{
+  --naranja:#F26419; --morado:#562BBC; --crema:#ECDEBB; --papel:#FBF5E6; --tinta:#2B1A12; --verde:#3E8E2F; --verde-claro:#9BCB3B; --rojo:#C8361F; --madera:#B9824A; --madera-osc:#6B4426;
+  --font-display:"Fredoka",system-ui,sans-serif; --font-text:"Nunito Sans",system-ui,sans-serif; --font-meta:"Nunito Sans",system-ui,sans-serif;
+  --bar-ink:var(--papel); --bar-pill:var(--naranja); --bar-pill-ink:var(--papel);
+  --pop:cubic-bezier(.34,1.56,.64,1);
+  --flag:polygon(0 0,100% 0,86% 50%,100% 100%,0 100%);
+}
+html[data-bar="dark"]{--bar-ink:var(--tinta)}
+body.lv{background:var(--morado);color:var(--papel);font:400 1.08rem/1.6 var(--font-text)}
+.lv p{max-width:62ch}
+section{position:relative}
+.lv-family,.lv-growing,.lv-box,.lv-table,.lv-river{padding-block:var(--space-section)}
+
+.paper{background:var(--papel);color:var(--tinta)}
+.field{background:#F4EEDA;background-image:radial-gradient(rgba(62,142,47,.10) 1.2px,transparent 1.4px);background-size:18px 18px;color:var(--tinta)}
+.wood{background:var(--madera-osc);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 9px),repeating-linear-gradient(90deg,rgba(255,220,170,.05) 0 1px,transparent 1px 37px),linear-gradient(180deg,#7A4E2C,#5E3B21);color:var(--papel)}
+
+/* Banderín: la muesca del logotipo LYV marca cada capítulo (recurso firma) */
+.lv-tab{display:inline-block;margin-bottom:1.1rem;padding:.5rem 2.4rem .5rem 1rem;background:var(--naranja);color:var(--papel);font:700 .85rem/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;clip-path:var(--flag)}
+.lv-tab--green{background:var(--verde)}
+.lv-tab--wood{background:var(--crema);color:var(--madera-osc)}
+.lv-h2{font:700 clamp(2.2rem,5vw,4.4rem)/1 var(--font-display);letter-spacing:-.01em;max-width:17ch;text-wrap:balance;margin-bottom:clamp(1.25rem,3vw,2rem)}
+.lv-lead{font-size:clamp(1.1rem,1.4vw,1.28rem)}
+.lv-credit{font:400 .82rem/1.4 var(--font-meta);opacity:.75;margin-top:1.25rem}
+
+/* 01 · Portada */
+.lv-hero{min-height:100svh;display:grid;grid-template-rows:1fr auto auto;gap:clamp(1.5rem,4vw,2.5rem);padding:6rem var(--m) clamp(1.5rem,3vw,2.5rem);overflow:hidden;background:var(--morado);background-image:radial-gradient(60% 60% at 50% 45%,rgba(242,100,25,.25),transparent 70%)}
+.lv-hero__title{align-self:center;justify-self:center;width:min(80vw,820px);margin:0}
+.lv-flag{width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
+/* Motion firma: el banderín se iza y ondea al llegar */
+.can-play .lv-flag{transform-origin:0 50%;transform:translateY(40px) scaleX(.2) skewY(8deg);opacity:0}
+.can-play .lv-flag.is-play{animation:lv-raise 1.1s var(--pop) .15s forwards}
+@keyframes lv-raise{60%{opacity:1;transform:translateY(-6px) scaleX(1.03) skewY(-2deg)}100%{opacity:1;transform:none}}
+.lv-hero__lead{font:600 clamp(1.2rem,2vw,1.7rem)/1.3 var(--font-display);text-align:center;justify-self:center;max-width:36ch!important}
+.lv-hero__meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font:700 .78rem/1.3 var(--font-meta);letter-spacing:.08em;text-transform:uppercase;color:var(--crema);max-width:none!important}
+
+/* 02 · Familia */
+.lv-tree{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));margin-top:clamp(2rem,5vw,3.5rem);position:relative}
+.lv-node{display:grid;gap:1rem;align-content:space-between;padding:clamp(1.25rem,3vw,2rem);background:#fff;border-radius:18px;box-shadow:0 6px 0 rgba(43,26,18,.12),0 24px 40px -26px rgba(43,26,18,.4);min-height:220px}
+.lv-node img{width:100%;max-height:120px;object-fit:contain}
+.lv-node span{font:700 .78rem/1.2 var(--font-meta);letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.lv-node--root{background:var(--morado);color:var(--papel)}
+.lv-node--root span{opacity:.85}
+
+/* 03 · Growing Season */
+.lv-growing__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (min-width:960px){.lv-growing__grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+.lv-sticker{border-radius:20px;overflow:hidden;box-shadow:0 8px 0 var(--verde),0 30px 50px -30px rgba(43,26,18,.5);rotate:-1.2deg}
+.lv-sticker img{width:100%}
+.lv-proc{display:grid;gap:clamp(1rem,2vw,1.75rem);margin-top:clamp(2.5rem,6vw,4rem)}
+@media (min-width:900px){.lv-proc{grid-template-columns:1fr 1fr}}
+.lv-proc figure{background:#fff;border-radius:16px;padding:clamp(.75rem,1.5vw,1.25rem);box-shadow:0 6px 0 rgba(43,26,18,.1)}
+.lv-proc img{width:100%;border-radius:8px}
+.lv-proc figcaption{font:400 .9rem/1.4 var(--font-meta);margin-top:.75rem;opacity:.85}
+
+/* 04 · Caja */
+.lv-box{background:var(--naranja);color:var(--papel);overflow:hidden}
+.lv-box__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (min-width:960px){.lv-box__grid{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}}
+.lv-box__hero{border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(43,26,18,.6)}
+.lv-box__hero img{width:100%}
+.lv-box .lv-tab{background:var(--morado)}
+.lv-stats{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));margin-top:2rem}
+.lv-stats dd{font:700 clamp(2.2rem,4.4vw,3.4rem)/1 var(--font-display);font-variant-numeric:tabular-nums}
+.lv-stats dt{font-size:.95rem;opacity:.9}
+
+/* 05 · En la mesa */
+.lv-table{background:var(--papel);color:var(--tinta);padding-bottom:clamp(3rem,6vw,5rem)}
+.lv-track{padding-inline:var(--m);align-items:center}
+.lv-track>li{flex:0 0 auto}
+.lv-track__intro{width:min(80vw,380px);padding-right:2rem}
+.lv-track figure{width:min(78vw,620px);border-radius:18px;overflow:hidden;box-shadow:0 6px 0 rgba(43,26,18,.12),0 30px 50px -30px rgba(43,26,18,.45)}
+.lv-track img{width:100%}
+
+/* 06 · Riverwood */
+.lv-river__logo{display:grid;place-items:center;margin-block:clamp(2rem,5vw,3.5rem);padding-inline:var(--m)}
+.lv-river__logo img{width:min(86vw,780px);filter:drop-shadow(0 18px 24px rgba(0,0,0,.4))}
+.lv-river__grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.lv-river__grid img{width:100%;height:100%;object-fit:cover;border-radius:14px;border:6px solid var(--crema);box-shadow:0 20px 40px -20px rgba(0,0,0,.6)}
+.lv-river__grid figure{aspect-ratio:4/3}
+.lv-cartela{display:grid;place-items:center;margin-block:clamp(2rem,5vw,3.5rem) 1rem}
+.lv-cartela img{width:min(80vw,640px)}
+.lv-stats--row{color:var(--crema)}
+
+/* Cierre */
+.lv-end{min-height:90svh;display:grid;place-items:center;align-content:center;gap:1.75rem;padding:var(--space-section) var(--m) 3rem;text-align:center;background:var(--morado)}
+.lv-flag--end{width:min(64vw,460px)}
+.lv-end__line{font:700 clamp(1.4rem,3vw,2.4rem)/1.1 var(--font-display);color:var(--crema)}
+.lv-end__foot{margin-top:clamp(3rem,7vw,6rem);text-align:left;border-top:2px solid rgba(236,222,187,.25);padding-top:2rem}
+.lv-end__foot a{color:var(--crema)}
+
+@media (prefers-reduced-motion:reduce){
+  .can-play .lv-flag{transform:none;opacity:1}
+}

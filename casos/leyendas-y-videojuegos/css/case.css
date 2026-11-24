@@ -1,0 +1,116 @@
+/* Leyendas & Videojuegos · «El libro de todas las leyendas» — píxel, rayas moradas y cuadros de diálogo */
+:root{
+  --morado:#5A09B1; --noche:#100024; --violeta:#2A0B57; --magenta:#E31582; --oro:#FFC400; --crema:#FFF6E0; --lila:#825DB7;
+  --font-display:"Pixelify Sans",ui-monospace,monospace; --font-text:"Nunito",system-ui,sans-serif; --font-meta:"VT323",ui-monospace,monospace;
+  --bar-ink:var(--crema); --bar-pill:var(--magenta); --bar-pill-ink:var(--crema);
+  --px:4px;
+}
+html[data-bar="dark"]{--bar-ink:var(--violeta)}
+body.ly{background:var(--violeta);color:var(--crema);font:400 1.08rem/1.6 var(--font-text)}
+.ly p{max-width:62ch}
+section{position:relative}
+.ly-eric,.ly-book,.ly-sketch,.ly-pixel,.ly-brand,.ly-channel{padding-block:var(--space-section)}
+
+/* Rayas diagonales de la cabecera del canal */
+.stripes{background-color:var(--violeta);background-image:repeating-linear-gradient(-45deg,rgba(130,93,183,.18) 0 34px,transparent 34px 68px);color:var(--crema)}
+.ly-eric,.ly-sketch,.ly-brand{background:var(--crema);color:var(--noche)}
+
+.ly-kicker,.ly-fine{font:400 1.15rem/1.2 var(--font-meta);letter-spacing:.04em;text-transform:uppercase}
+.ly-kicker{display:inline-block;margin-bottom:1rem;padding:.15rem .6rem;background:var(--magenta);color:var(--crema)}
+.ly-fine{opacity:.8;margin-top:1rem;text-transform:none}
+.ly-h2{font:700 clamp(2.2rem,5vw,4.6rem)/1 var(--font-display);max-width:17ch;text-wrap:balance;margin-bottom:clamp(1.25rem,3vw,2rem)}
+.ly-lead{font-size:clamp(1.1rem,1.4vw,1.3rem)}
+
+/* Cuadro de diálogo de RPG: el recurso firma (borde de píxeles escalonado) */
+.ly-dialog{position:relative;background:var(--noche);color:var(--crema);padding:clamp(1rem,2.4vw,1.6rem) clamp(1.2rem,3vw,2rem);
+  box-shadow:0 calc(-1*var(--px)) 0 0 var(--crema),0 var(--px) 0 0 var(--crema),calc(-1*var(--px)) 0 0 0 var(--crema),var(--px) 0 0 0 var(--crema),
+  0 calc(-2*var(--px)) 0 0 var(--noche),0 calc(2*var(--px)) 0 0 var(--noche),calc(-2*var(--px)) 0 0 0 var(--noche),calc(2*var(--px)) 0 0 0 var(--noche)}
+.ly-dialog p{font:400 clamp(1.3rem,2.2vw,1.9rem)/1.25 var(--font-meta);letter-spacing:.02em}
+.ly-dialog b{color:var(--oro);font-weight:400}
+.ly-dialog__next{position:absolute;right:1rem;bottom:.6rem;color:var(--oro);animation:ly-bob 1s steps(2,end) infinite}
+@keyframes ly-bob{50%{transform:translateY(4px)}}
+
+/* 01 · Portada */
+.ly-hero{min-height:100svh;display:grid;grid-template-rows:1fr auto auto;gap:clamp(1.5rem,4vw,2.5rem);padding:6rem var(--m) clamp(1.5rem,3vw,2.5rem);overflow:hidden}
+.ly-hero__title{align-self:center;justify-self:center;width:min(86vw,760px);margin:0}
+.ly-hero__title img{width:100%;image-rendering:auto;box-shadow:0 0 0 var(--px) var(--crema),0 0 0 calc(2*var(--px)) var(--noche),0 40px 80px -40px #000}
+/* Motion firma: la pantalla de título aparece a bloques, como un sprite que carga */
+.can-play .ly-hero__title img{clip-path:inset(0 0 100% 0)}
+.can-play .ly-hero__title img.is-play{animation:ly-load 1s steps(8,end) .15s forwards}
+@keyframes ly-load{to{clip-path:inset(0 0 0 0)}}
+.ly-hero .ly-dialog{justify-self:center;width:min(100%,760px)}
+.ly-hero__meta{display:flex;justify-content:space-between;gap:1rem;font:400 1.1rem/1 var(--font-meta);text-transform:uppercase;max-width:none!important;color:var(--oro)}
+
+/* 02 · Eric */
+.ly-eric__grid{display:grid;gap:clamp(2rem,5vw,5rem);align-items:center}
+@media (min-width:960px){.ly-eric__grid{grid-template-columns:minmax(0,6fr) minmax(0,4fr)}}
+.ly-stats{display:grid;gap:1.25rem}
+.ly-stats div{padding:1rem 1.25rem;background:var(--morado);color:var(--crema);box-shadow:6px 6px 0 var(--magenta)}
+.ly-stats dd{font:700 clamp(2.2rem,4.4vw,3.6rem)/1 var(--font-display);font-variant-numeric:tabular-nums}
+.ly-stats dt{font:400 1.15rem/1.2 var(--font-meta);opacity:.9}
+.ly-eric .ly-kicker,.ly-sketch .ly-kicker,.ly-brand .ly-kicker{background:var(--morado)}
+
+/* 03 · Antes / después */
+.ly-ba{display:grid;gap:1.25rem;align-items:center;margin-top:clamp(2rem,5vw,3.5rem)}
+@media (min-width:900px){.ly-ba{grid-template-columns:minmax(0,4fr) auto minmax(0,6fr)}}
+.ly-ba__card{background:var(--crema);padding:clamp(1rem,2vw,1.5rem);box-shadow:8px 8px 0 var(--noche)}
+.ly-ba__card img{width:100%}
+.ly-ba__card:first-child{filter:grayscale(.35);rotate:-1.5deg}
+.ly-ba__card figcaption{font:400 1.1rem/1 var(--font-meta);text-transform:uppercase;color:var(--noche);margin-top:.75rem}
+.ly-ba__arrow{justify-self:center;font:400 2.4rem/1 var(--font-meta);color:var(--oro)}
+@media (max-width:899px){.ly-ba__arrow{rotate:90deg}}
+
+/* 04 · Bocetos */
+.ly-sketch__grid{display:grid;gap:clamp(2rem,5vw,4rem);align-items:center}
+@media (min-width:960px){.ly-sketch__grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+.ly-paper{background:#fff;padding:clamp(1rem,2vw,1.5rem);box-shadow:0 26px 50px -26px rgba(16,0,36,.45);rotate:1.2deg}
+.ly-paper img{width:100%}
+
+/* 05 · Píxel */
+.ly-type{display:grid;gap:clamp(2rem,4vw,3rem);align-items:center;margin-block:clamp(2rem,5vw,3rem)}
+@media (min-width:960px){.ly-type{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}}
+.ly-dialog--box{background:#fff;padding:clamp(1rem,2vw,1.5rem)}
+.ly-dialog--box img{width:100%}
+.ly-dialog--box figcaption{font:400 1.1rem/1 var(--font-meta);color:var(--noche);margin-top:.6rem;text-transform:uppercase}
+.ly-type__big{font:700 clamp(3.5rem,10vw,9rem)/.85 var(--font-display);color:var(--crema);max-width:none!important;text-shadow:6px 6px 0 var(--magenta)}
+.ly-type__big span{color:var(--oro);text-shadow:6px 6px 0 var(--morado)}
+.ly-pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:1rem}
+.ly-pal button{width:100%;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:.2rem;padding:1rem;border:0;background:var(--c);color:var(--crema);text-align:left;font:400 1.05rem/1.1 var(--font-meta);box-shadow:0 0 0 var(--px) var(--crema);transition:transform .2s steps(3,end)}
+.ly-pal li:nth-child(3) button{color:var(--noche)}
+.ly-pal b{font:700 1.15rem/1 var(--font-display)}
+.ly-pal small{font-size:.95rem;opacity:.85}
+.ly-pal button:hover{transform:translate(-4px,-4px)}
+.ly-pal button:active{transform:scale(.97)}
+
+/* 06 · Marca */
+.ly-logo-big{margin-block:clamp(2rem,5vw,3.5rem)}
+.ly-logo-big img{width:100%;max-width:1000px;margin-inline:auto}
+.ly-banner img{width:100%;box-shadow:8px 8px 0 var(--noche)}
+
+/* 07 · Canal */
+.ly-channel__grid{display:grid;gap:clamp(1.5rem,3vw,2.5rem);align-items:center;margin-top:clamp(2rem,5vw,3rem)}
+@media (min-width:960px){.ly-channel__grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+.ly-browser__bar{display:flex;align-items:center;gap:.4rem;padding:.55rem .9rem;background:var(--noche);font:400 1rem/1 var(--font-meta)}
+.ly-browser__bar i{width:10px;height:10px;background:var(--magenta)}
+.ly-browser__bar i:nth-child(2){background:var(--oro)}.ly-browser__bar i:nth-child(3){background:var(--lila)}
+.ly-browser__bar span{margin-left:.75rem;opacity:.75}
+.ly-browser img{width:100%}
+.ly-browser,.ly-thumb img{box-shadow:0 0 0 var(--px) var(--crema),10px 10px 0 calc(var(--px)) var(--noche)}
+.ly-thumb img{width:100%}
+.ly-family{display:grid;gap:.5rem;margin-top:clamp(3rem,7vw,5rem);padding:clamp(1.25rem,3vw,2rem);background:var(--crema);color:var(--noche);text-decoration:none;box-shadow:8px 8px 0 var(--magenta);transition:transform .25s steps(3,end),box-shadow .25s steps(3,end)}
+.ly-family .ly-kicker{justify-self:start;margin:0}
+.ly-family__t{font:700 clamp(1.2rem,2.2vw,1.8rem)/1.2 var(--font-display)}
+@media (hover:hover) and (pointer:fine){.ly-family:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 var(--magenta)}}
+
+/* Cierre */
+.ly-end{min-height:90svh;display:grid;place-items:center;align-content:center;gap:1.75rem;padding:var(--space-section) var(--m) 3rem;text-align:center}
+.ly-end__logo{width:min(70vw,520px);box-shadow:0 0 0 var(--px) var(--crema),0 0 0 calc(2*var(--px)) var(--noche)}
+.can-play .ly-end__logo{clip-path:inset(0 0 100% 0)}
+.can-play .ly-end__logo.is-play{animation:ly-load .9s steps(8,end) forwards}
+.ly-end__line{font:400 clamp(1.4rem,2.6vw,2.2rem)/1.1 var(--font-meta);color:var(--oro)}
+.ly-end__foot{margin-top:clamp(3rem,7vw,6rem);text-align:left;border-top:var(--px) solid rgba(255,246,224,.2);padding-top:2rem}
+
+@media (prefers-reduced-motion:reduce){
+  .can-play .ly-hero__title img,.can-play .ly-end__logo{clip-path:none}
+  .ly-dialog__next{animation:none}
+}

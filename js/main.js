@@ -116,7 +116,12 @@
   /* ---------- Revelado al hacer scroll ---------- */
   if ("IntersectionObserver" in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); } });
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var t = en.target; t.classList.add("is-visible"); io.unobserve(t);
+        /* Al terminar la entrada, se quitan las clases para que cada tarjeta recupere su propia transición de hover/pulsación */
+        setTimeout(function () { t.classList.remove("reveal", "reveal-stagger", "is-visible"); }, 1500);
+      });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     $$(".reveal, .reveal-stagger").forEach(function (n) { io.observe(n); });
   } else {
@@ -149,7 +154,7 @@
     if (reduceMotion) { root.classList.add("autoslider--static"); return; }
 
     var GAP = 19, W, span, offset = 0, vel = 0, speed = 0.5, hover = false, dragging = false;
-    var lastX = 0, lastT = 0, moved = 0, raf = null, visible = true;
+    var lastX = 0, lastT = 0, moved = 0, raf = null, visible = true, pid = null;
 
     function measure() { W = items[0].offsetWidth; span = items.length * (W + GAP); }
     measure();
@@ -177,13 +182,18 @@
     root.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hover = true; });
     root.addEventListener("pointerleave", function () { hover = false; });
     root.addEventListener("pointerdown", function (e) {
-      dragging = true; moved = 0; lastX = e.clientX; lastT = performance.now();
-      root.classList.add("is-dragging"); root.setPointerCapture(e.pointerId);
+      // La captura del puntero se activa solo al arrastrar: si se activa al pulsar, el clic
+      // acaba en el contenedor y el enlace del proyecto no se abre.
+      dragging = true; moved = 0; lastX = e.clientX; lastT = performance.now(); pid = e.pointerId;
     });
     root.addEventListener("pointermove", function (e) {
       if (!dragging) return;
       var dx = e.clientX - lastX, now = performance.now();
       offset -= dx; moved += Math.abs(dx);
+      if (moved > 6 && !root.classList.contains("is-dragging")) {
+        root.classList.add("is-dragging");
+        try { root.setPointerCapture(pid); } catch (err) {}
+      }
       vel = -dx / Math.max(1, (now - lastT) / 16.7);
       lastX = e.clientX; lastT = now;
     });
