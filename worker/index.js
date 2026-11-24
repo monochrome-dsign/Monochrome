@@ -60,6 +60,7 @@ async function instagram(env, ctx) {
     timestamp: p.timestamp
   }));
   const body = JSON.stringify({ posts, updated: new Date().toISOString() });
+  if (!posts.length) return new Response(body, { headers: { ...headers, "cache-control": "no-store" } });
   ctx.waitUntil(Promise.all([
     env.IG.put("feed", body, { expirationTtl: FEED_TTL }),
     env.IG.put("feed-stale", body)
