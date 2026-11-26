@@ -190,6 +190,7 @@ h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
 .site-footer { background: var(--crema); padding: 20px clamp(20px, 4.4vw, 64px); display: flex; justify-content: space-between; align-items: center; gap: 24px 48px; font-size: 16px; line-height: 1.15; }
 .site-footer .brand img { width: 143px; height: 18px; }
 .site-footer__col { display: flex; flex-direction: column; gap: 2px; }
+.site-footer__col a { display: inline-block; padding-block: 5px; min-height: 24px; }
 .site-footer a:hover { text-decoration: underline; text-underline-offset: 2px; }
 @media (max-width: 900px) {
   .site-footer { display: grid; grid-template-columns: 1fr 1fr; padding-block: 32px; }
@@ -620,7 +621,7 @@ textarea.lf-input { min-height: 136px; resize: vertical; }
 .lf-success.is-visible { display: flex; }
 .lf-success__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--crema); color: var(--negro); }
 .lf-success__icon svg { width: 28px; height: 28px; }
-.lf-success h3 { font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1.1; letter-spacing: -.02em; outline: none; }
+.lf-success [data-success-title] { font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1.1; letter-spacing: -.02em; outline: none; }
 .lf-success p { color: var(--texto-suave-dark); max-width: 46ch; }
 .lf-success ol { margin: 4px 0 8px; padding-left: 20px; display: grid; gap: 6px; color: var(--crema); }
 .lf-pack-badge { display: none; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 20px; border-radius: 12px; background: rgba(255,255,252,.08); font-size: 14px; }
@@ -932,7 +933,7 @@ body.modal-open .floating, .nav-open ~ .floating { opacity: 0; visibility: hidde
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
 /* Portfolio: contador en filtros y lightbox */
-.chip__count { margin-left: 8px; font-size: 12px; font-weight: 700; opacity: .6; font-variant-numeric: tabular-nums; }
+.chip__count { margin-left: 8px; font-size: 12px; font-weight: 700; opacity: .8; font-variant-numeric: tabular-nums; }
 .lightbox__count { font-size: 13px; font-weight: 700; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
 
 

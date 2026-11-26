@@ -107,8 +107,34 @@ function cacheControl(url, res) {
   return null;
 }
 
+/* Cabeceras de seguridad. La CSP permite solo lo que la web usa: recursos propios, imágenes del feed
+   de Instagram (Behold / CDN de Instagram) y el envío del formulario a Web3Forms. */
+const SECURITY = {
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+  "x-frame-options": "SAMEORIGIN",
+  "cross-origin-opener-policy": "same-origin",
+  "content-security-policy": [
+    "default-src 'self'",
+    "script-src 'self'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https://behold.pictures https://*.behold.pictures https://*.cdninstagram.com https://*.fbcdn.net",
+    "font-src 'self'",
+    "connect-src 'self' https://api.web3forms.com",
+    "media-src 'self'",
+    "frame-src 'none'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self' https://api.web3forms.com",
+    "frame-ancestors 'self'"
+  ].join("; ")
+};
+
 function withHeaders(url, res, status) {
   const h = new Headers(res.headers);
+  for (const [k, v] of Object.entries(SECURITY)) h.set(k, v);
   const cc = cacheControl(url, res);
   if (cc && res.status === 200) h.set("cache-control", cc);
   return new Response(res.body, { status: status || res.status, statusText: res.statusText, headers: h });

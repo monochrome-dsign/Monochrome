@@ -159,9 +159,12 @@
     form.appendChild(progress);
     form.appendChild(el("p", { class: "visually-hidden", "aria-live": "polite", "data-live": true }));
 
+    // Nivel del título de cada paso: uno por debajo del encabezado de la sección que contiene el formulario
+    var host = self.root.closest("section"), hh = host && host.querySelector("h1, h2, h3");
+    var stepTag = "h" + Math.min(6, (hh ? +hh.tagName[1] : 2) + 1);
     STEPS.forEach(function (step, si) {
       var sec = el("section", { class: "lf-step", "data-step": si, "aria-labelledby": self.fieldId("t" + si) });
-      sec.appendChild(el("h3", { class: "lf-step__title", id: self.fieldId("t" + si), tabindex: "-1" }, esc(step.title)));
+      sec.appendChild(el(stepTag, { class: "lf-step__title", id: self.fieldId("t" + si), tabindex: "-1" }, esc(step.title)));
       if (step.hint) sec.appendChild(el("p", { class: "lf-step__hint" }, esc(step.hint)));
       step.fields.forEach(function (f) {
         if (f.row) {
@@ -188,7 +191,7 @@
     var success = el("div", { class: "lf-success", "data-success": true, role: "status" });
     success.innerHTML =
       '<span class="lf-success__icon">' + ICON_CHECK + '</span>' +
-      '<h3 tabindex="-1" data-success-title>¡Gracias, <span data-success-name></span>! Ya tengo tu idea.</h3>' +
+      '<' + stepTag + ' tabindex="-1" data-success-title>¡Gracias, <span data-success-name></span>! Ya tengo tu idea.</' + stepTag + '>' +
       '<p data-success-text>He recibido tu solicitud. Esto es lo que pasa ahora:</p>' +
       '<ol><li>Reviso tu propuesta en menos de 48 h laborables.</li><li>Te contacto por el canal que has elegido.</li><li>Fijamos una llamada de asesoría gratuita.</li></ol>' +
       '<a class="btn btn--outline" href="/portfolio">Mientras tanto, mira el portfolio ' + ICON_ARROW + '</a>';
