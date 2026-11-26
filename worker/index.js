@@ -98,6 +98,22 @@ function canonicalRedirect(url) {
   return changed ? Response.redirect(url.toString(), 301) : null;
 }
 
+/* Caché: CSS/JS con ?v=hash y fuentes → 1 año inmutable; imágenes → 30 días; HTML → revalidar siempre. */
+function cacheControl(url, res) {
+  const p = url.pathname;
+  if (/\.(woff2?|ttf)$/.test(p) || (url.searchParams.has("v") && /\.(css|js)$/.test(p))) return "public, max-age=31536000, immutable";
+  if (/\.(webp|avif|jpe?g|png|gif|svg|ico|mp4|webm)$/.test(p)) return "public, max-age=2592000, stale-while-revalidate=86400";
+  if (/\.(css|js|webmanifest|txt|xml)$/.test(p)) return "public, max-age=3600, must-revalidate";
+  return null;
+}
+
+function withHeaders(url, res, status) {
+  const h = new Headers(res.headers);
+  const cc = cacheControl(url, res);
+  if (cc && res.status === 200) h.set("cache-control", cc);
+  return new Response(res.body, { status: status || res.status, statusText: res.statusText, headers: h });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -105,8 +121,7 @@ export default {
     if (redirect) return redirect;
     if (url.pathname === "/api/instagram") return instagram(env, ctx);
     const res = await env.ASSETS.fetch(request);
-    if (url.pathname === "/404") return new Response(res.body, { status: 404, headers: res.headers });
-    return res;
+    return withHeaders(url, res, url.pathname === "/404" ? 404 : 0);
   },
   async scheduled(event, env, ctx) {
     ctx.waitUntil(refreshToken(env));
