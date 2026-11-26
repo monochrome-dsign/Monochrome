@@ -7,3 +7,4 @@ wrangler.jsonc
 worker
 _cov
 AUDITORIA_SEO.md
+.wrangler
