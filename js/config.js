@@ -4,6 +4,7 @@
    ========================================================================== */
 window.MONO_CONFIG = {
   email: "monochromejoseantonio@gmail.com",
+  phone: "+34 695 94 05 26",
 
   social: {
     instagram: "https://www.instagram.com/monochrome_dsg/",

@@ -167,19 +167,17 @@ Mediana de 3 pasadas (2 en Portfolio, porque una falló) sobre producción.
 
 ## Lo que tienes que hacer tú (fuera del código)
 
-1. **Google Search Console**
-   - Añade la propiedad de dominio `monochrome.website`.
-   - Verifica con el registro TXT que te indique. Se añade en Cloudflare → DNS, y Cloudflare puede hacerlo automáticamente con "Verificar con Cloudflare".
-   - Envía `https://monochrome.website/sitemap.xml`.
-   - Pide la indexación de `/`, `/servicios`, `/portfolio` y de los 3 o 4 casos que más te interesen (Traders, Picoteo's, Petroprix, Bengala).
-2. **Bing Webmaster Tools:** importa el sitio desde Search Console (un clic) y envía el mismo sitemap. Bing alimenta también a ChatGPT Search y Copilot.
-3. **IndexNow:** en Cloudflare → monochrome.website → Caching → Configuration, activa **Crawler Hints**. Avisa por IndexNow a Bing, Yandex y compañía cada vez que cambie una página, sin tocar código.
-4. **Google Business Profile:** créalo como "Diseñador gráfico" en Sevilla. Puedes marcarlo como negocio de área de servicio, sin dirección pública.
-   - Pon la web, el horario y fotos de proyectos, y pide reseñas a tus clientes.
-   - Es lo que más ayuda a aparecer en "diseñador gráfico Sevilla".
-5. **Aviso legal:** la LSSI pide el domicilio del titular. Ahora pone solo "Sevilla, España". Si eres autónomo con domicilio fiscal, valora añadir la dirección completa o un domicilio profesional. Este punto conviene confirmarlo con tu gestor.
-6. **Validación del schema:** pasa 2 o 3 URLs (inicio, servicios y un caso) por [Rich Results Test](https://search.google.com/test/rich-results) y por [validator.schema.org](https://validator.schema.org). El JSON-LD es válido sintácticamente y sigue schema.org, pero estas herramientas lo confirman con los criterios de Google.
-7. **Enlaces externos:** pide a tus clientes con web (Picoteo's, Rosse, Leyendas & Videojuegos…) un enlace "Diseño: Monochrome" a su caso. Es la señal de autoridad que más pesa para una web nueva.
+Hecho (26 nov 2026):
+- [x] **Google Search Console y Bing Webmaster Tools:** sitio dado de alta, sitemap enviado e indexación solicitada para las páginas clave.
+- [x] **Perfil de Empresa de Google:** "Monochrome Design Studio", diseñador gráfico, negocio de área de servicio en Sevilla y Andalucía. La web y el teléfono coinciden con los de la web. En el schema se añade "Monochrome Design Studio" como nombre alternativo y el teléfono, para que Google vea los mismos datos en los dos sitios.
+- [x] **IndexNow:** Crawler Hints activado en Cloudflare.
+- [x] **Aviso legal:** domicilio fiscal completo, teléfono y condición de autónomo.
+
+Pendiente:
+1. **Perfil de Empresa:** añade Instagram y YouTube en "Perfiles de redes sociales" (ahora están vacíos), sube fotos de proyectos, publica novedades y pide reseñas a tus clientes.
+2. **Validación del schema:** pasa 2 o 3 URLs (inicio, servicios y un caso) por [Rich Results Test](https://search.google.com/test/rich-results) y por [validator.schema.org](https://validator.schema.org).
+3. **Enlaces externos:** pide a tus clientes con web (Picoteo's, Rosse, Leyendas & Videojuegos…) un enlace "Diseño: Monochrome" a su caso.
+4. **Search Console, dentro de 1 o 2 semanas:** revisa Páginas (indexadas o excluidas) y Core Web Vitals cuando haya datos.
 
 ## Cómo se mantiene
 
