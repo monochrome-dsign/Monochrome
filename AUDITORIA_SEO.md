@@ -93,4 +93,97 @@ Las rutas son las del repositorio publicado. Las líneas son las del HTML genera
 
 ## Resultado
 
-Se completa al terminar las fases.
+Implementado en 4 commits, uno por fase, más un ajuste final. Todo está desplegado y comprobado en producción.
+
+| Commit | Fase |
+| --- | --- |
+| `983352a` | 1 · Indexabilidad |
+| `e1b768a` | 2 · Metadatos y datos estructurados |
+| `1a35d8d` | 3 · Rendimiento |
+| `a39005c` | 4 · Semántica, accesibilidad, seguridad y legal |
+| siguiente | CSP para Cloudflare Web Analytics y alto reservado del formulario |
+
+### Qué se corrigió (por número de problema)
+
+1. **Canonical:** las URLs canónicas son limpias (`/portfolio`, `/proyecto-traders`). Coinciden con lo que sirve el servidor, con el sitemap y con todos los enlaces internos.
+2. **Una sola versión de cada URL**, con una única 301 directa al destino final:
+   - `http` → `https`
+   - `www` → sin `www`
+   - `.html` y `/index` → URL limpia
+   - barra final → sin barra
+   - proyectos retirados → portfolio; agrupados → su caso
+3. **JSON-LD en las 18 páginas:**
+   - Organization + ProfessionalService, WebSite y WebPage en todas.
+   - BreadcrumbList en todas las internas.
+   - CreativeWork en los casos.
+   - CollectionPage + ItemList en portfolio.
+   - ContactPage en contacto.
+   - Service con las 3 ofertas y sus precios, más FAQPage, en servicios.
+4–5. **Titles y descriptions:**
+   - Títulos de 46 a 60 caracteres con la keyword primero; descripciones de 140 a 165.
+   - Todo sale de un único archivo (`seo.py`) y la compilación avisa si alguno se sale de rango.
+6. **Open Graph y Twitter Cards completos.** Cada caso tiene su propia imagen OG de 1200×630.
+7. **Fuentes autoalojadas:** las 21 familias de Google Fonts y Fontshare se sirven desde el propio dominio, solo con los alfabetos latin y latin-ext. Ya no hay ninguna petición a Google.
+8. **Cabeceras de seguridad** (HSTS, CSP, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options, COOP).
+   - **Caché:** un año inmutable para CSS/JS versionados con `?v=hash` y para las fuentes; 30 días para las imágenes.
+9. **`robots.txt`:** permite explícitamente los crawlers de buscadores e IA y solo excluye `/api/`.
+   - **`sitemap.xml`:** 17 URLs, con `lastmod` que solo cambia cuando cambia el contenido de la página.
+10. **`/llms.txt`:** qué es Monochrome, para quién trabaja, precios, proceso, contacto y los 12 casos.
+11. **404:** `noindex`, estado 404 real (también en `/404`) y enlaces a servicios, portfolio y contacto. Funciona en rutas profundas porque los recursos usan rutas absolutas.
+12. **Favicons y manifest:** `favicon.ico`, iconos de 192 y 512 px (y versión maskable), `logo-512.png` para el schema y `site.webmanifest`.
+13. **Imágenes:**
+    - Carga diferida en todo lo que queda fuera del primer pantallazo.
+    - El LCP sin lazy y con `fetchpriority="high"`.
+    - `width`/`height` en el 100 % de las imágenes de contenido.
+    - `srcset` en las miniaturas y en la portada de servicios.
+14. **Accesibilidad:** corregidos los 5 avisos de Lighthouse (área táctil, contraste, roles ARIA, nombre accesible del slider y orden de encabezados). La accesibilidad queda en 100 en 4 de las 5 páginas.
+15. **Legal:**
+    - Sección de Aviso legal (LSSI) y enlaces Aviso legal / Privacidad / Cookies en el pie.
+    - Fuera el aviso de plantilla; Web3Forms y Behold explicados.
+    - **Cookies:** no se usan cookies que requieran consentimiento. La única analítica es la de Cloudflare, que no usa cookies, así que no hace falta banner.
+19. Eliminadas las páginas puente con `meta refresh` y el archivo `_redirects`; ahora todo lo resuelve el Worker.
+
+**Pendiente, de tu parte:**
+- 16 y 17, contenido: Flowkah y Susi siguen con poco texto (unas 200 palabras). Para reescribirlos necesito tu OK.
+- 18, minificar CSS/JS: lo he descartado. El ahorro es de pocos KB con Brotli y el código del repositorio dejaría de ser legible.
+
+### Lighthouse móvil · después
+
+Mediana de 3 pasadas (2 en Portfolio, porque una falló) sobre producción.
+
+| Página | Rendimiento | Accesibilidad | Buenas prácticas | SEO | LCP | CLS | TBT |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Inicio | 92 (antes 95) | 100 (96) | 100 (100) | 100 (100) | 2,5 s (2,6) | 0 (0) | 260 ms (80) |
+| Portfolio | 100 (97) | 100 (93) | 100 (100) | 100 (100) | 1,6 s (2,3) | 0 (0) | 51 ms (30) |
+| Servicios | 98 (100) | 100 (96) | 100 (100) | 100 (100) | 1,6 s (1,8) | 0 (0) | 158 ms (10) |
+| Contacto | 100 (100) | 100 (95) | 100 (100) | 100 (100) | 1,4 s (1,5) | 0 (0) | 22 ms (0) |
+| Traders (caso) | 98 (97) | 97 (93) | 100 (100) | 100 (100) | 1,4 s (2,1) | 0 (0) | 141 ms (30) |
+
+**Notas sobre las mediciones:**
+- El LCP mejora en todas las páginas y queda por debajo de 2,5 s.
+- El CLS es 0 en todas.
+- **El TBT tiene mucho ruido:** la máquina de pruebas comparte CPU. La misma página en Inicio dio entre 86 y 92 de rendimiento y entre 90 y 430 ms de TBT en pasadas seguidas, incluso bloqueando el feed de Instagram y la analítica. La medición de "antes" es de una sola pasada. Para el INP real, mira el informe de Core Web Vitals de Search Console cuando haya datos de usuarios.
+- **El 97 de accesibilidad en Traders** es un aviso de contraste que salta mientras se anima la entrada de los títulos (`is-armed`). Al terminar la animación el contraste es correcto.
+
+## Lo que tienes que hacer tú (fuera del código)
+
+1. **Google Search Console**
+   - Añade la propiedad de dominio `monochrome.website`.
+   - Verifica con el registro TXT que te indique. Se añade en Cloudflare → DNS, y Cloudflare puede hacerlo automáticamente con "Verificar con Cloudflare".
+   - Envía `https://monochrome.website/sitemap.xml`.
+   - Pide la indexación de `/`, `/servicios`, `/portfolio` y de los 3 o 4 casos que más te interesen (Traders, Picoteo's, Petroprix, Bengala).
+2. **Bing Webmaster Tools:** importa el sitio desde Search Console (un clic) y envía el mismo sitemap. Bing alimenta también a ChatGPT Search y Copilot.
+3. **IndexNow:** en Cloudflare → monochrome.website → Caching → Configuration, activa **Crawler Hints**. Avisa por IndexNow a Bing, Yandex y compañía cada vez que cambie una página, sin tocar código.
+4. **Google Business Profile:** créalo como "Diseñador gráfico" en Sevilla. Puedes marcarlo como negocio de área de servicio, sin dirección pública.
+   - Pon la web, el horario y fotos de proyectos, y pide reseñas a tus clientes.
+   - Es lo que más ayuda a aparecer en "diseñador gráfico Sevilla".
+5. **Aviso legal:** la LSSI pide el domicilio del titular. Ahora pone solo "Sevilla, España". Si eres autónomo con domicilio fiscal, valora añadir la dirección completa o un domicilio profesional. Este punto conviene confirmarlo con tu gestor.
+6. **Validación del schema:** pasa 2 o 3 URLs (inicio, servicios y un caso) por [Rich Results Test](https://search.google.com/test/rich-results) y por [validator.schema.org](https://validator.schema.org). El JSON-LD es válido sintácticamente y sigue schema.org, pero estas herramientas lo confirman con los criterios de Google.
+7. **Enlaces externos:** pide a tus clientes con web (Picoteo's, Rosse, Leyendas & Videojuegos…) un enlace "Diseño: Monochrome" a su caso. Es la señal de autoridad que más pesa para una web nueva.
+
+## Cómo se mantiene
+
+- **Metadatos y schema:** se editan en `seo.py` (title, description, tipo de página, packs y precios). La compilación avisa si un title o una description se salen de rango.
+- **Sitemap, robots.txt y llms.txt:** se regeneran solos en cada compilación.
+- **Fuentes de un caso nuevo:** si enlaza a Google Fonts o Fontshare, `fonts_local.py` las descarga y las sirve desde el dominio automáticamente.
+- **Redirecciones:** si se retira o se agrupa un proyecto, se añade su URL antigua en `REDIRECTS` (`worker/index.js`).
