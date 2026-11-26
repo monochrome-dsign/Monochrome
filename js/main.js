@@ -67,11 +67,11 @@
   });
 
   /* ---------- Navegación: sección activa y scroll suave a secciones de la página ---------- */
-  var path = location.pathname.split("/").pop() || "index.html";
+  var path = location.pathname.replace(/\.html$/, "").replace(/\/index$/, "/").replace(/(.)\/$/, "$1") || "/";
   $$(".nav-links a, .nav-cta").forEach(function (a) {
     var href = a.getAttribute("href") || "", target = null;
-    if (href === "contacto.html" && path !== "contacto.html") target = document.getElementById("contacto");
-    else if (href.indexOf("index.html#") === 0 && (path === "index.html" || path === "")) target = document.getElementById(href.split("#")[1]);
+    if (href === "/contacto" && path !== "/contacto") target = document.getElementById("contacto");
+    else if (href.indexOf("/#") === 0 && path === "/") target = document.getElementById(href.split("#")[1]);
     if (!target) return;
     a.addEventListener("click", function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -90,7 +90,7 @@
     var a = e.target.closest && e.target.closest("a[href]");
     if (!a) return;
     var href = a.getAttribute("href");
-    if (!/^[\w-]+\.html/.test(href)) return;
+    if (!/^\/[\w-]*(?:[?#]|$)/.test(href)) return;
     var page = href.split(/[?#]/)[0];
     if (prefetched[page] || page === path) return;
     prefetched[page] = true;
@@ -501,7 +501,7 @@
         $("[data-lb-cat]", lb).textContent = card.getAttribute("data-cat-label");
         $("[data-lb-desc]", lb).textContent = card.getAttribute("data-desc") || "";
         var svc = card.getAttribute("data-service");
-        $("[data-lb-cta]", lb).href = "contacto.html" + (svc ? "?servicio=" + svc : "");
+        $("[data-lb-cta]", lb).href = "/contacto" + (svc ? "?servicio=" + svc : "");
       };
       $$(".work-card[data-lightbox]").forEach(function (card) {
         card.addEventListener("click", function () { opener = card; fill(card); lb.showModal(); document.body.classList.add("modal-open"); });

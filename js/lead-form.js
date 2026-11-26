@@ -191,7 +191,7 @@
       '<h3 tabindex="-1" data-success-title>¡Gracias, <span data-success-name></span>! Ya tengo tu idea.</h3>' +
       '<p data-success-text>He recibido tu solicitud. Esto es lo que pasa ahora:</p>' +
       '<ol><li>Reviso tu propuesta en menos de 48 h laborables.</li><li>Te contacto por el canal que has elegido.</li><li>Fijamos una llamada de asesoría gratuita.</li></ol>' +
-      '<a class="btn btn--outline" href="portfolio.html">Mientras tanto, mira el portfolio ' + ICON_ARROW + '</a>';
+      '<a class="btn btn--outline" href="/portfolio">Mientras tanto, mira el portfolio ' + ICON_ARROW + '</a>';
 
     this.root.innerHTML = "";
     this.root.appendChild(form);
@@ -211,7 +211,7 @@
       var id = self.fieldId("consent");
       wrap.innerHTML =
         '<label class="lf-consent" for="' + id + '"><input type="checkbox" id="' + id + '" name="consent" value="Sí" required aria-describedby="' + id + '-err"> ' +
-        '<span>He leído y acepto la <a href="legal.html#privacidad" target="_blank" rel="noopener">política de privacidad</a>. Usaré tus datos solo para responder a tu solicitud.</span></label>' +
+        '<span>He leído y acepto la <a href="/legal#privacidad" target="_blank" rel="noopener">política de privacidad</a>. Usaré tus datos solo para responder a tu solicitud.</span></label>' +
         '<p class="lf-error" id="' + id + '-err">Necesito tu consentimiento para poder responderte.</p>';
       return wrap;
     }

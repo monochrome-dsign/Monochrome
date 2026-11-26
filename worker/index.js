@@ -68,15 +68,45 @@ async function instagram(env, ctx) {
   return new Response(body, { headers });
 }
 
+const HOST = "monochrome.website";
+
+/* Proyectos agrupados o retirados → destino final (sin cadenas de redirecciones). */
+const REDIRECTS = {
+  "/proyecto-aural-battle": "/proyecto-dayo#aural",
+  "/proyecto-growing-season": "/proyecto-lyv#growing",
+  "/proyecto-riverwood-town": "/proyecto-lyv#riverwood",
+  "/proyecto-danxer": "/portfolio",
+  "/proyecto-la-isla": "/portfolio",
+  "/proyecto-tito-panto": "/portfolio"
+};
+
+/* Una sola versión de cada URL: https, sin www, sin .html, sin index y sin barra final. */
+function canonicalRedirect(url) {
+  let changed = false;
+  if (url.protocol === "http:" && url.hostname.endsWith(HOST)) { url.protocol = "https:"; changed = true; }
+  if (url.hostname === "www." + HOST) { url.hostname = HOST; changed = true; }
+  let path = url.pathname;
+  if (/\/index(\.html)?$/.test(path)) path = path.replace(/index(\.html)?$/, "");
+  else if (path.endsWith(".html")) path = path.slice(0, -5);
+  if (path.length > 1 && path.endsWith("/")) path = path.replace(/\/+$/, "");
+  const target = REDIRECTS[path];
+  if (target) {
+    const [p, hash] = target.split("#");
+    path = p; url.hash = hash ? "#" + hash : "";
+  }
+  if (path !== url.pathname) { url.pathname = path || "/"; changed = true; }
+  return changed ? Response.redirect(url.toString(), 301) : null;
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (url.hostname === "www.monochrome.website") {
-      url.hostname = "monochrome.website";
-      return Response.redirect(url.toString(), 301);
-    }
+    const redirect = canonicalRedirect(url);
+    if (redirect) return redirect;
     if (url.pathname === "/api/instagram") return instagram(env, ctx);
-    return env.ASSETS.fetch(request);
+    const res = await env.ASSETS.fetch(request);
+    if (url.pathname === "/404") return new Response(res.body, { status: 404, headers: res.headers });
+    return res;
   },
   async scheduled(event, env, ctx) {
     ctx.waitUntil(refreshToken(env));
