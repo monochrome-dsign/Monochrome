@@ -1149,3 +1149,6 @@ dialog::backdrop { animation: backdrop-in .3s ease; }
   .nav-open .nav-menu > * { animation: none; }
   :active { transform: none !important; }
 }
+/* Reserva el alto del formulario (se pinta con JS) para evitar saltos de maquetación */
+[data-lead-form] { min-height: 800px; }
+@media (min-width: 700px) { [data-lead-form] { min-height: 540px; } }

@@ -108,7 +108,8 @@ function cacheControl(url, res) {
 }
 
 /* Cabeceras de seguridad. La CSP permite solo lo que la web usa: recursos propios, imágenes del feed
-   de Instagram (Behold / CDN de Instagram) y el envío del formulario a Web3Forms. */
+   de Instagram (Behold / CDN de Instagram), el envío del formulario a Web3Forms y la analítica sin
+   cookies de Cloudflare Web Analytics, que Cloudflare inserta automáticamente. */
 const SECURITY = {
   "strict-transport-security": "max-age=31536000; includeSubDomains",
   "x-content-type-options": "nosniff",
@@ -118,11 +119,11 @@ const SECURITY = {
   "cross-origin-opener-policy": "same-origin",
   "content-security-policy": [
     "default-src 'self'",
-    "script-src 'self'",
+    "script-src 'self' https://static.cloudflareinsights.com",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://behold.pictures https://*.behold.pictures https://*.cdninstagram.com https://*.fbcdn.net",
     "font-src 'self'",
-    "connect-src 'self' https://api.web3forms.com",
+    "connect-src 'self' https://api.web3forms.com https://cloudflareinsights.com",
     "media-src 'self'",
     "frame-src 'none'",
     "object-src 'none'",
